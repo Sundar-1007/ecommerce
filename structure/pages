@@ -1,0 +1,20 @@
+src/
+  components/
+    Search.js
+    Login.js
+    Signup.js
+    MainCategories.js
+    Carousel.js
+    BestProducts.js
+    SuggestedProducts.js
+    OfferProducts.js
+  pages/
+    Home.js
+    Cart.js
+    Wishlist.js
+    Categories.js
+    ProductDetails.js
+    Profile.js
+    Dashboard.js
+  App.js
+  index.js
