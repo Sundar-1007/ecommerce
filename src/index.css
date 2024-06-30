@@ -30,3 +30,39 @@
         background-position: 0 50%, 0 -2px, 0 calc(100% + 2px), 50% 50%, 50% -2px, 50% calc(100% + 2px), 100% 50%, 100% -2px, 100% calc(100% + 2px);
     }
 }
+
+.errPage .bg_img {
+    background: url('https://media.geeksforgeeks.org/wp-content/uploads/20240226131034/2142357.jpg');
+    height: 400px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+
+.schema-box {
+    border: 1px solid blue;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.schema-row {
+    margin-bottom: 10px;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.user-trait {
+    background-color: green;
+}
+
+.group-trait {
+    background-color: red;
+}

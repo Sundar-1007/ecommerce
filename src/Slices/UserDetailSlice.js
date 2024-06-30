@@ -5,8 +5,10 @@ import { API } from "../API/API";
 const initialState = {
     data: null,
     isLoading: false,
-    err: "",
-    loggedUser: null
+    err: null,
+    userData: null,
+    userStatus: null,
+    cartProducts: []
 };
 
 export const getAllUserData = createAsyncThunk('api/getAllUserData',
@@ -20,16 +22,37 @@ export const getAllUserData = createAsyncThunk('api/getAllUserData',
     }
 )
 
+export const getCartProducts = createAsyncThunk('api/getCartProducts',
+    async (_, { rejectWithValue, getState }) => {
+        const { userData } = getState().UserDetail;
+        try {
+            const req = userData.cartProducts.map((id) => axios.get(`${API}/ProductData/${id}`))
+            const res = await Promise.all(req)
+            return res.map((response) => response.data);
+
+        } catch {
+            return rejectWithValue({ err: "error" })
+        }
+    }
+)
+
 const UserDetailSlice = createSlice({
     name: "userData",
     initialState,
     reducers: {
         logIn: (state, action) => {
             const { userMail, userPassword } = action.payload;
-            state.loggedUser = state.data.find((value) => value.userMail === userMail && value.userPassword === userPassword);
+            const user = state.data.find((value) => value.userMail === userMail && value.userPassword === userPassword);
+            if (user) {
+                state.userData = user;
+                state.userStatus = null;
+            } else {
+                state.userStatus = "Wrong password or email";
+                state.userData = null
+            }
         },
         logOut: (state) => {
-            state.loggedUser = null;
+            state.userData = null;
         }
     },
     extraReducers: (builders) => {
@@ -46,6 +69,19 @@ const UserDetailSlice = createSlice({
                 state.isLoading = false;
                 state.data = null;
                 state.err = action.error;
+            })
+
+            .addCase(getCartProducts.pending, (state, action) => {
+                state.isLoading = true;
+            })
+            .addCase(getCartProducts.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.cartProducts = action.payload;
+            })
+            .addCase(getCartProducts.rejected, (state, action) => {
+                state.isLoading = false;
+                state.cartProducts = [];
+                state.err = action.payload.error;
             })
     }
 })

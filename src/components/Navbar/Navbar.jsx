@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { logOut } from '../../Slices/UserDetailSlice';
 
 export const Navbar = () => {
-    const { loggedUser } = useSelector(state => state.UserDetail);
+    const { userData } = useSelector(state => state.UserDetail);
     const dispatch = useDispatch()
 
     return (
@@ -37,10 +37,10 @@ export const Navbar = () => {
                         <ul className="navbar-nav mb-2 mb-lg-0 gap-3">
                             <li className="nav-item dropdown d-flex align-items-center">
                                 <Link className="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {loggedUser ?
+                                    {userData ?
                                         <>
                                             <i className="bi bi-person me-2"></i>
-                                            <span>{loggedUser.userName}</span>
+                                            <span>{userData.userName}</span>
                                         </> :
                                         <>
                                             <i className="bi bi-box-arrow-in-right me-2"></i>
@@ -48,11 +48,11 @@ export const Navbar = () => {
                                         </>}
                                 </Link>
                                 <ul className="dropdown-menu">
-                                    <li><Link className="dropdown-item disabled" disabled>{loggedUser ? loggedUser.userName : 'Login'}</Link></li>
-                                    {!loggedUser && <li><Link className="dropdown-item" to={'/Login'}><i className="bi bi-box-arrow-in-right me-2"></i>Login</Link></li>}
-                                    {loggedUser && <li><Link className="dropdown-item" to="/Profile"><i className="bi bi-person me-2"></i>Profile</Link></li>}
-                                    {loggedUser?.isAdmin && <li><Link className="dropdown-item" to="/DashBoard"><i className="bi bi-clipboard-pulse me-2"></i>DashBoard</Link></li>}
-                                    {loggedUser && <li><Link className="dropdown-item" onClick={()=> dispatch(logOut())}><i className="bi bi-box-arrow-left me-2"></i>Logout</Link></li>}
+                                    <li><Link className="dropdown-item disabled" disabled>{userData ? userData.userName : 'Login'}</Link></li>
+                                    {!userData && <li><Link className="dropdown-item" to={'/login'}><i className="bi bi-box-arrow-in-right me-2"></i>Login</Link></li>}
+                                    {userData && <li><Link className="dropdown-item" to="/Profile"><i className="bi bi-person me-2"></i>Profile</Link></li>}
+                                    {userData?.isAdmin && <li><Link className="dropdown-item" to="/DashBoard"><i className="bi bi-clipboard-pulse me-2"></i>DashBoard</Link></li>}
+                                    {userData && <li><Link className="dropdown-item" onClick={() => dispatch(logOut())}><i className="bi bi-box-arrow-left me-2"></i>Logout</Link></li>}
                                 </ul>
                             </li>
                             <li className="nav-item">

@@ -9,6 +9,9 @@ import Categories from '../Pages/Categories/Categories'
 import Dashboard from '../Pages/Dashboard/Dashboard'
 import ProductDetails from '../Pages/ProductDetails/ProductDetails'
 import Login from '../Pages/Login/Login'
+import PrivateRouter from './PrivateRouter'
+import ErrorPage from '../Pages/404/ErrorPage'
+import Test from '../Pages/Test/Test'
 
 const Router = () => {
     return (
@@ -17,13 +20,24 @@ const Router = () => {
                 <Navbar />
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    <Route path='/cart' element={<Cart />} />
-                    <Route path='/wishlist' element={<Wishlist />} />
+                    <Route path='/cart' element={<PrivateRouter />}>
+                        <Route index element={<Cart />} />
+                    </Route>
+                    <Route path='/wishlist' element={<PrivateRouter />}>
+                        <Route index element={<Wishlist />} />
+                    </Route>
+                    <Route path='/profile' element={<PrivateRouter />}>
+                        <Route index element={<Profile />} />
+                    </Route>
+                    <Route path='/dashboard' element={<PrivateRouter />}>
+                        <Route index element={<Dashboard />} />
+                    </Route>
                     <Route path='/login' element={<Login />} />
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/productdetails/:productid' element={<ProductDetails/>}/>
+                    <Route path='/productdetails/:productid' element={<ProductDetails />} />
                     <Route path='/categories' element={<Categories />} />
-                    <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='*' element={<ErrorPage />} />
+                    <Route path='/404' element={<ErrorPage />} />
+                    <Route path='/test' element={<Test />} />
                 </Routes>
             </BrowserRouter>
         </>

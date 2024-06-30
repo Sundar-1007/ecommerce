@@ -1,11 +1,21 @@
 import { Formik } from 'formik'
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from '../../Slices/UserDetailSlice';
+import { Navigate } from 'react-router-dom';
 
 const Login = () => {
+    const { userData, userStatus } = useSelector(state => state.UserDetail);
     const validRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
+
+    if (userData) {
+        return <Navigate to={'/'} />
+    }
+
+    console.log(userStatus);
+
     return (
         <>
             <div className="container">
@@ -85,6 +95,7 @@ const Login = () => {
                     )}
                 </Formik>
             </div>
+            {userStatus && <p className='text-danger text-center mt-5'>{userStatus}</p>}
         </>
     )
 }

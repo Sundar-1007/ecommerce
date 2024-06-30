@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { getProductDetails } from '../../Slices/ProductDetailSlice';
+import AddCart from '../../components/AddCart/AddCart';
 
 const ProductDetails = () => {
 
@@ -40,11 +41,11 @@ const ProductDetails = () => {
             <div className="col-md-7">
               <p className='fs-5'>{ProductDetailData.productName}</p>
               <p className='lead'>{ProductDetailData.categoryType}</p>
-              {ProductDetailData.offerPrice ? 
-              <p><span className="text-decoration-line-through">{ProductDetailData.price}</span> {ProductDetailData.offerPrice}</p>
-               : <p>{ProductDetailData.price}</p>}
-               <p>{ProductDetailData.description}</p>
-               <button className="btn btn-outline-success">Add to cart</button>
+              {ProductDetailData.offerPrice ?
+                <p><span className="text-decoration-line-through">{ProductDetailData.price}</span> {ProductDetailData.offerPrice}</p>
+                : <p>{ProductDetailData.price}</p>}
+              <p>{ProductDetailData.description}</p>
+              <AddCart ProductDetailData={ProductDetailData} />
             </div>
           </div>
         </div>
